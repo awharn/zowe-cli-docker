@@ -34,7 +34,7 @@ jobs:
             awharn/zowe-cli:latest
             awharn/zowe-cli:zowe-v1-lts
       #     ghcr.io/awharn/zowe-cli:latest
-      #     ghcr.io/awharn/zowe-v1-lts:latest
+      #     ghcr.io/awharn/zowe-cli:zowe-v1-lts
       
       - name: Image Digest
         run:  echo ${{ steps.build.outputs.digest }}
