@@ -42,6 +42,7 @@ jobs:
       # - name: Update Downstream
       #   uses: benc-uk/workflow-dispatch@v1
       #   with: 
+      #     ref:      refs/heads/master
       #     workflow: ci
       #     repo:     awharn/zowe-cli-extended-docker
       #     token:    ${{ secrets.PAT }}
