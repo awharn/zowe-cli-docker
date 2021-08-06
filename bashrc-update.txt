@@ -1,0 +1,4 @@
+
+if !(pgrep -a node | grep -q "zowe --daemon"); then
+    start-zowe-daemon || true
+fi
