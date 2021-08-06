@@ -21,9 +21,11 @@ else
     echo "Installing Node.js version $VERSION for current user..."
     install_node.sh $VERSION
 
-    # Execute the script for user zowe
-    echo "Installing Node.js version $VERSION for zowe user..."
-    su -c "install_node.sh $VERSION" - zowe
+    if [[ $EUID -ne 1000 ]]; then
+        # Execute the script for user zowe
+        echo "Installing Node.js version $VERSION for zowe user..."
+        su -c "install_node.sh $VERSION" - zowe
+    fi
 
     # Do the install for zowe
     su -c "install_zowe.sh $APIF" - zowe

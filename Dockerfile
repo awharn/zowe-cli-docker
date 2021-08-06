@@ -109,6 +109,9 @@ RUN sed -i -e "/# If not running interactively, don't do anything/r ${tempDir}/d
 # Auto unlock keyring on login
 RUN printf "\nif test -z \"\$SSH_CONNECTION\"; then\n\techo zowe | gnome-keyring-daemon --unlock --components=secrets > /dev/null\nfi\n" >> /home/zowe/.bashrc
 
+# Start in home directory
+RUN echo "cd ~" >> ${bashEnv} && echo "cd ~" >> /home/zowe/.bashrc
+
 COPY install_zowe.sh ${scriptsDir}
 
 # Install zowe
