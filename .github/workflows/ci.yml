@@ -37,10 +37,10 @@ jobs:
       - name: Image Digest
         run:  echo ${{ steps.build.outputs.digest }}
       
-      # - name: Update Downstream
-      #   uses: benc-uk/workflow-dispatch@v1
-      #   with: 
-      #     ref:      refs/heads/next
-      #     workflow: ci
-      #     repo:     awharn/zowe-cli-extended-docker
-      #     token:    ${{ secrets.PAT }}
+      - name: Update Downstream
+        uses: benc-uk/workflow-dispatch@v1
+        with: 
+          ref:      refs/heads/next
+          workflow: ci
+          repo:     awharn/zowe-cli-extended-docker
+          token:    ${{ secrets.PAT }}
