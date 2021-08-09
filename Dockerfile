@@ -13,6 +13,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV DEFAULT_NODE_VERSION=12.22.4
+ENV ZOWE_STORAGE_DIR=/etc/zowe
+ENV ZOWE_RELEASE_VERSION=1.23.0
 
 RUN apt-get update -qqy \
   && apt-get -qqy install \
@@ -114,8 +116,23 @@ RUN echo "cd ~" >> ${bashEnv} && echo "cd ~" >> /home/zowe/.bashrc
 
 COPY install_zowe.sh ${scriptsDir}
 
+RUN mkdir ${ZOWE_STORAGE_DIR}
+RUN chown root:root ${ZOWE_STORAGE_DIR}
+RUN chmod ugo+rwx ${ZOWE_STORAGE_DIR}
+
+USER zowe
+
 # Install zowe
-RUN su -c "install_zowe.sh" - zowe 
+RUN wget https://zowe.jfrog.io/artifactory/libs-release-local/org/zowe/${ZOWE_RELEASE_VERSION}/zowe-cli-package-${ZOWE_RELEASE_VERSION}.zip -P ${ZOWE_STORAGE_DIR}
+RUN wget https://zowe.jfrog.io/artifactory/libs-release-local/org/zowe/${ZOWE_RELEASE_VERSION}/zowe-cli-plugins-${ZOWE_RELEASE_VERSION}.zip -P ${ZOWE_STORAGE_DIR}
+RUN unzip -o ${ZOWE_STORAGE_DIR}/zowe-cli-package-${ZOWE_RELEASE_VERSION}.zip -d ${ZOWE_STORAGE_DIR}
+RUN unzip -o ${ZOWE_STORAGE_DIR}/zowe-cli-plugins-${ZOWE_RELEASE_VERSION}.zip -d ${ZOWE_STORAGE_DIR}
+RUN rm ${ZOWE_STORAGE_DIR}/zowe-cli-package-${ZOWE_RELEASE_VERSION}.zip
+RUN rm ${ZOWE_STORAGE_DIR}/zowe-cli-plugins-${ZOWE_RELEASE_VERSION}.zip
+RUN install_zowe.sh true
+
+USER root
+RUN chmod ugo-w ${ZOWE_STORAGE_DIR}
 
 # Cleanup
 RUN apt-get -q autoremove && apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin

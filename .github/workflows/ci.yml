@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'zowe-1.23.0'
   workflow_dispatch:
 
 jobs:
@@ -19,12 +19,12 @@ jobs:
           username: awharn
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # - name: Login to GitHub Container Registry
-      #   uses: docker/login-action@v1
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.repository_owner }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build & Push
         id:   build
@@ -32,18 +32,8 @@ jobs:
         with:
           push: true
           tags: |
-            awharn/zowe-cli:latest
-            awharn/zowe-cli:zowe-v1-lts
-      #     ghcr.io/awharn/zowe-cli:latest
-      #     ghcr.io/awharn/zowe-cli:zowe-v1-lts
+            awharn/zowe-cli:zowe-1.23.0
+            ghcr.io/awharn/zowe-cli:zowe-1.23.0
       
       - name: Image Digest
         run:  echo ${{ steps.build.outputs.digest }}
-      
-      - name: Update Downstream
-        uses: benc-uk/workflow-dispatch@v1
-        with: 
-          ref:      refs/heads/master
-          workflow: ci
-          repo:     awharn/zowe-cli-extended-docker
-          token:    ${{ secrets.PAT }}
