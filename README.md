@@ -2,12 +2,12 @@
 
 This repository contains the files required to create a Zowe CLI docker container
 
-To run the container, run `docker run -it -u zowe --cap-add=IPC_LOCK awharn/zowe-cli:next /bin/bash`
+To run the container, run `docker run -it -u zowe --cap-add=IPC_LOCK awharn/zowe-cli:next-20210726 /bin/bash`
 
 Requirements:
 
 - IPC_LOCK capability - Secure credential storage
-- Access to the internet (for updating NPM version and Zowe plugins - does not apply if NODE_JS_NVM_VERSION is unset)
+- Access to the internet (for updating NPM version - does not apply if NODE_JS_NVM_VERSION is unset)
 
 Environment variables:
 
