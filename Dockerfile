@@ -12,7 +12,7 @@ ENV ENV=${bashEnv}
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV DEFAULT_NODE_VERSION=12.22.4
+ENV DEFAULT_NODE_VERSION=12.22.5
 
 RUN apt-get update -qqy \
   && apt-get -qqy install \
