@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - 'zowe-1.23.0'
+      - 'zowe-1.25.0'
   workflow_dispatch:
 
 jobs:
@@ -32,8 +32,8 @@ jobs:
         with:
           push: true
           tags: |
-            awharn/zowe-cli:zowe-1.23.0
-            ghcr.io/awharn/zowe-cli:zowe-1.23.0
+            awharn/zowe-cli:zowe-1.25.0
+            ghcr.io/awharn/zowe-cli:zowe-1.25.0
       
       - name: Image Digest
         run:  echo ${{ steps.build.outputs.digest }}
