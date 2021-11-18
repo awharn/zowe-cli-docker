@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - 'next-20210726'
+      - 'next-20210916'
   workflow_dispatch:
 
 jobs:
@@ -32,8 +32,8 @@ jobs:
         with:
           push: true
           tags: |
-            awharn/zowe-cli:next-20210726
-            ghcr.io/awharn/zowe-cli:next-20210726
+            awharn/zowe-cli:next-20210916
+            ghcr.io/awharn/zowe-cli:next-20210916
       
       - name: Image Digest
         run:  echo ${{ steps.build.outputs.digest }}
